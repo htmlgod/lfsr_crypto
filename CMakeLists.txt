@@ -9,34 +9,28 @@ HunterGate(
 )
 
 project(lfsr_crypto)
-option(BUILD_TESTS "Build tests" OFF)
+option(BUILD_TESTS "Build tests" ON)
 
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
-# TODO: define source files here
-add_executable(
-    ${PROJECT_NAME} 
-    ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
-)
-
-# TODO: define include directories here
-target_include_directories(
-    ${PROJECT_NAME}
-    PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/headers
-)
+add_subdirectory(field)
 
 include(cmake/packaging.cmake)
 if(BUILD_TESTS)
     enable_testing()
-    # TODO: enum tests
     add_executable("${PROJECT_NAME}_tests"
-        tests/test.cpp
+        tests/cppfield_test.cpp
+    )
+    target_include_directories(
+        "${PROJECT_NAME}_tests"
+        PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/field/include/
     )
     target_link_libraries(
       "${PROJECT_NAME}_tests"
       GTest::gtest_main
+      field
     )
     include(GoogleTest)
     gtest_discover_tests("${PROJECT_NAME}_tests")
