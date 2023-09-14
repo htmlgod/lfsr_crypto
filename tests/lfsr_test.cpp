@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-#include <iostream>
 #include <lfsr.hpp>
 
 // TODO: add more tests
+using namespace cpplfsr;
 
 TEST(lfsr_tests, step_right) {
     lfsr<3, lfsr_direction::right> reg{{0,2}, {0,0,1}};
@@ -39,4 +39,7 @@ TEST(lfsr_tests, gamma_right) {
         std::string str = "1010011";
         EXPECT_EQ(gamma, str);
     }
+}
+TEST(lincomp_algo_tests, cg_test) {
+    EXPECT_EQ(get_linear_complexity_cg(std::string{"10011100"}), 6);
 }
