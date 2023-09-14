@@ -6,8 +6,7 @@
 #include <set>
 #include <vector>
 
-#include <iostream>
-
+namespace cpplfsr { // namespace
 enum class lfsr_direction {
     left, // x_0 ... x_n
     right // x_n ... x_0
@@ -54,3 +53,8 @@ private:
     std::vector<size_t> memory = std::vector<size_t>(SIZE, 0);
     std::set<size_t> function;
 };
+
+size_t get_linear_complexity_cg(const std::string& gamma);
+size_t get_linear_complexity_bk(const std::string& gamma);
+
+} // end of namespace lfsr
