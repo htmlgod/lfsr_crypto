@@ -4,6 +4,9 @@
 #include <bitset>
 #include <stdexcept>
 
+#include <thread>
+#include <future>
+
 namespace cpplfsr {
 
 size_t get_linear_complexity_cg(const std::string& gamma) {
@@ -30,7 +33,31 @@ size_t get_linear_complexity_cg(const std::string& gamma) {
     return L;
 }
 
-size_t get_linear_complexity_bk(const std::string& gamma) { return gamma.size(); }
+size_t get_linear_complexity_for_comb_gen(std::initializer_list<std::string> regs_gamma,
+        std::function<size_t(const std::vector<size_t>&)>&& function) {
+    std::vector<size_t> reg_comps;
+    reg_comps.reserve(regs_gamma.size());
+    for (auto& gamma : regs_gamma)
+        reg_comps.push_back(get_linear_complexity_cg(gamma));
 
+    return function(reg_comps);
+}
+
+size_t get_linear_complexity_for_comb_gen_par(std::initializer_list<std::string> regs_gamma,
+        std::function<size_t(const std::vector<size_t>&)>&& function) {
+    std::vector<std::future<size_t>> futures;
+    futures.reserve(regs_gamma.size());
+    for (auto&& gamma : regs_gamma)
+        futures.push_back(std::async(std::launch::async, &get_linear_complexity_cg, std::move(gamma)));
+    
+    std::vector<size_t> reg_comps;
+    reg_comps.reserve(regs_gamma.size());
+    for (auto& future : futures)
+        reg_comps.push_back(future.get());
+
+    return function(reg_comps);
+}
+
+size_t get_linear_complexity_bk(const std::string& gamma) { return gamma.size(); }
 }
 

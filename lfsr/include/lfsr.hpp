@@ -6,6 +6,8 @@
 #include <set>
 #include <vector>
 
+#include <functional>
+
 namespace cpplfsr { // namespace
 enum class lfsr_direction {
     left, // x_0 ... x_n
@@ -56,5 +58,9 @@ private:
 
 size_t get_linear_complexity_cg(const std::string& gamma);
 size_t get_linear_complexity_bk(const std::string& gamma);
+size_t get_linear_complexity_for_comb_gen(std::initializer_list<std::string> regs_gamma,
+        std::function<size_t(const std::vector<size_t>&)>&& function);
+size_t get_linear_complexity_for_comb_gen_par(std::initializer_list<std::string> regs_gamma,
+        std::function<size_t(const std::vector<size_t>&)>&& function);
 
 } // end of namespace lfsr
