@@ -21,7 +21,7 @@ if(BUILD_TESTS)
     enable_testing()
     add_executable("${PROJECT_NAME}_tests"
         tests/lfsr_test.cpp
-        #tests/lincomp_test.cpp
+        tests/comb_gen_lin_comp_tests.cpp
     )
 #target_include_directories(
 #        "${PROJECT_NAME}_tests"
