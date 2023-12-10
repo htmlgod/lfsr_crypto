@@ -6,12 +6,12 @@ using namespace cpplfsr;
 
 TEST(lfsr_tests, step_right) {
     lfsr<3, lfsr_direction::right> reg{{0,2}, {0,0,1}};
-    EXPECT_TRUE(reg.step() == 1);
+    EXPECT_TRUE(reg() == 1);
 }
 
 TEST(lfsr_tests, step_left) {
     lfsr<3> reg{{0,2}, {0,0,1}};
-    EXPECT_TRUE(reg.step() == 0);
+    EXPECT_TRUE(reg() == 0);
 }
 
 TEST(lfsr_tests, gamma_left) {

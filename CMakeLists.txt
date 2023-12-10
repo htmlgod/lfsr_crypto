@@ -7,6 +7,11 @@ HunterGate(
     URL "https://github.com/cpp-pm/hunter/archive/v0.24.14.tar.gz"
     SHA1 "00901c19eefc02d24b16705b5f5a2b4f093a73fb"
 )
+set(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
+set(GCC_COVERAGE_LINK_FLAGS    "-lgcov")
+
+set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 
 project(lfsr_crypto)
 option(BUILD_TESTS "Build tests" ON)

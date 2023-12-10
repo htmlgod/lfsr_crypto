@@ -15,13 +15,14 @@ find_package(Boost CONFIG REQUIRED)
 
 add_library(
     ${PROJECT_NAME} 
-    ${CMAKE_CURRENT_SOURCE_DIR}/lfsr.cpp
+    INTERFACE
 )
 
 target_include_directories(
     ${PROJECT_NAME}
-    PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC Boost::boost)
